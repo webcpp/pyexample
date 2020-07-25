@@ -1,4 +1,4 @@
-from hi import hi, template
+from hi import hi
 import os
 import sys
 

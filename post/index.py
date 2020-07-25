@@ -1,4 +1,10 @@
+from hi import template
+import os
+import sys
+
+
 def handler(req,res,param):
-    res.header('Content-Type','text/plain;charset=utf-8')
-    res.content('post id = '+param['id'])
+    param['title']='jinja2 template'
+    tpl_engine = template(os.path.join(os.getcwd(),'pyexample/templates/post'))
+    res.content(tpl_engine.file_render('b.j2',param))
     res.status(200)
