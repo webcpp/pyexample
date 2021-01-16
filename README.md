@@ -77,8 +77,8 @@ Receive bandwidth:     2.29 megabits / second
 		hi_session_expires 300s;
         hi_need_headers off;
 
-	    location ~ ^/(home|edit|login|logout|(post/(\d+)))/?$ {
-            #rewrite ^/(.*)\.py$ /$1 break;
+	    location ~ \.py$ {
+            rewrite ^/(.*)\.py$ /$1 break;
 		    hi_python_script pyexample/index.py;
 	        
 	    }
@@ -93,7 +93,7 @@ Receive bandwidth:     2.29 megabits / second
 ```
 
 ```txt
-apib -c30000 -t4 -d30 http://pyexample/home
+apib -c30000 -t4 -d30 http://pyexample/test.py
 
 (5 / 30) 16438.213 90% cpu
 (10 / 30) 21110.076 100% cpu
