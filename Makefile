@@ -1,5 +1,5 @@
 PROJECT=pyexample
-DIR= assets edit home login logout post templates 
+DIR= post templates error test
 
 ifndef INSTALL_DIR
 INSTALL_DIR=/usr/local/nginx
