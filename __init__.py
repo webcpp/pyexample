@@ -3,7 +3,7 @@ import os
 import sys
 import importlib
 
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 
 app = hi()
 
