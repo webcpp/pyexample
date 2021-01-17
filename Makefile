@@ -1,5 +1,5 @@
 PROJECT=pyexample
-DIR=error test assets
+DIR=error test assets website
 
 ifndef INSTALL_DIR
 INSTALL_DIR=/usr/local/nginx
