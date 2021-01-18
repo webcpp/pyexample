@@ -18,8 +18,8 @@ def find(req,res,param):
             res.header('Content-Type','application/json')
             res.content(json.dumps(result,ensure_ascii=False))
             res.status(200)
-    except:
-        res.content('Failed\n')
+    except Exception as e:
+        res.content(repr(e))
         res.status(500)
 
 def handler(req,res,param):

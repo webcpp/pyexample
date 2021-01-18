@@ -13,9 +13,9 @@ def run(req,res,param):
     try:
         module = importlib.import_module('.index',param['module'].replace("/","."))
         module.handler(req,res,param)
-    except:
-        from error import index
-        index.handler(req,res,param)
+    except Exception as e:
+        res.content(repr(e))
+        res.status(500)
 
 
 
