@@ -8,7 +8,14 @@ def find(req,res,param):
     try:
         if req.has_form("id"):
             config = get_config()
-            pool = PooledDB(pymysql,cursorclass=pymysql.cursors.DictCursor,host=config['host'],port=config['port'], user=config['username'], password=config['password'],database=config['database'],charset=config['charset'])
+            pool = PooledDB(pymysql,
+            cursorclass=pymysql.cursors.DictCursor,
+            host=config['host'],
+            port=config['port'],
+            user=config['username'],
+            password=config['password'],
+            database=config['database'],
+            charset=config['charset'])
             connection = pool.connection()
             cur = connection.cursor()
             count = cur.execute("SELECT * FROM `websites` WHERE `id`=%s;" , (int(req.get_form('id'))))

@@ -8,7 +8,14 @@ from website.index import get_config
 def findall(req,res,param):
     try:
         config = get_config()
-        pool = PooledDB(pymysql,cursorclass=pymysql.cursors.DictCursor,host=config['host'],port=config['port'], user=config['username'], password=config['password'],database=config['database'],charset=config['charset'])
+        pool = PooledDB(pymysql,
+        cursorclass=pymysql.cursors.DictCursor,
+        host=config['host'],
+        port=config['port'],
+        user=config['username'],
+        password=config['password'],
+        database=config['database'],
+        charset=config['charset'])
         connection = pool.connection()
         cur = connection.cursor()
         order = 'DESC'
