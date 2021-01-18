@@ -1,13 +1,13 @@
 import pymysql
 import pymysql.cursors
-from dbutils.persistent_db import PersistentDB
+from dbutils.pooled_db import PooledDB
 import json
 
 
 
 def findall(req,res,param):
     try:
-        pool = PersistentDB(pymysql,host='127.0.0.1',port=3306, user='root', password='123456',database='testdb',charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+        pool = PooledDB(pymysql,host='127.0.0.1',port=3306, user='root', password='123456',database='testdb',charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
         connection = pool.connection()
         cur = connection.cursor()
         order = 'DESC'
