@@ -1,14 +1,14 @@
+import pymysql
 import pymysql.cursors
-from pymysqlpool.pool import Pool
+from dbutils.persistent_db import PersistentDB
 import json
 
 
 
 def findall(req,res,param):
     try:
-        pool = Pool(host='127.0.0.1',port=3306, user='root', password='123456',database='testdb',charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
-        pool.init()
-        connection = pool.get_conn()
+        pool = PersistentDB(pymysql,host='127.0.0.1',port=3306, user='root', password='123456',database='testdb',charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+        connection = pool.connection()
         cur = connection.cursor()
         order = 'DESC'
         start = 0
@@ -21,7 +21,8 @@ def findall(req,res,param):
             size = int(req.get_form('size'))
         cur.execute("SELECT * FROM `websites` ORDER BY `id` {} LIMIT %s,%s;".format(order),(start,size))
         result = cur.fetchall()
-        pool.release(connection)
+        cur.close()
+        connection.close()
         res.header('Content-Type','application/json')
         res.content(json.dumps(result,ensure_ascii=False))
         res.status(200)
