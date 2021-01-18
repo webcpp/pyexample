@@ -20,13 +20,14 @@ def findall(req,res,param):
             start = int(req.get_form('start'))
         if(req.has_form('size')):
             size = int(req.get_form('size'))
-        cur.execute("SELECT * FROM `websites` ORDER BY `id` {} LIMIT %s,%s;".format(order),(start,size))
-        result = cur.fetchall()
+        count = cur.execute("SELECT * FROM `websites` ORDER BY `id` {} LIMIT %s,%s;".format(order),(start,size))
+        if count >0:
+            result = cur.fetchall()
+            res.header('Content-Type','application/json')
+            res.content(json.dumps(result,ensure_ascii=False))
+            res.status(200)
         cur.close()
         connection.close()
-        res.header('Content-Type','application/json')
-        res.content(json.dumps(result,ensure_ascii=False))
-        res.status(200)
     except Exception as e:
         res.content(repr(e))
         res.status(500)
