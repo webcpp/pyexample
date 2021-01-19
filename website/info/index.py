@@ -1,32 +1,19 @@
-import pymysql
-import pymysql.cursors
-from dbutils.pooled_db import PooledDB
 import json
-from website.index import get_config
+from website.index import dbhelp
 
 def find(req,res,param):
+    db = dbhelp()
     try:
         if req.has_form("id"):
-            config = get_config()
-            pool = PooledDB(pymysql,
-            cursorclass=pymysql.cursors.DictCursor,
-            host=config['host'],
-            port=config['port'],
-            user=config['username'],
-            password=config['password'],
-            database=config['database'],
-            charset=config['charset'])
-            connection = pool.connection()
-            cur = connection.cursor()
-            count = cur.execute("SELECT * FROM `websites` WHERE `id`=%s;" , (int(req.get_form('id'))))
+            count = db.execute("SELECT * FROM `websites` WHERE `id`=%s;" , (int(req.get_form('id'))))
             if count>0:
-                result = cur.fetchone()
+                result = db.fetchone()
                 res.header('Content-Type','application/json')
                 res.content(json.dumps(result,ensure_ascii=False))
                 res.status(200)
-            cur.close()
-            connection.close()
+        db.close()
     except Exception as e:
+        db.close()
         res.content(repr(e))
         res.status(500)
 

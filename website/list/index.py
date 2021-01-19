@@ -1,23 +1,10 @@
-import pymysql
-import pymysql.cursors
-from dbutils.pooled_db import PooledDB
 import json
-from website.index import get_config
+from website.index import dbhelp
 
 
 def findall(req,res,param):
+    db = dbhelp()
     try:
-        config = get_config()
-        pool = PooledDB(pymysql,
-        cursorclass=pymysql.cursors.DictCursor,
-        host=config['host'],
-        port=config['port'],
-        user=config['username'],
-        password=config['password'],
-        database=config['database'],
-        charset=config['charset'])
-        connection = pool.connection()
-        cur = connection.cursor()
         order = 'DESC'
         start = 0
         size = 5
@@ -27,15 +14,15 @@ def findall(req,res,param):
             start = int(req.get_form('start'))
         if(req.has_form('size')):
             size = int(req.get_form('size'))
-        count = cur.execute("SELECT * FROM `websites` ORDER BY `id` {} LIMIT %s,%s;".format(order),(start,size))
+        count = db.execute("SELECT * FROM `websites` ORDER BY `id` {} LIMIT %s,%s;".format(order),(start,size))
         if count >0:
-            result = cur.fetchall()
+            result = db.fetchall()
             res.header('Content-Type','application/json')
             res.content(json.dumps(result,ensure_ascii=False))
             res.status(200)
-        cur.close()
-        connection.close()
+        db.close()
     except Exception as e:
+        db.close()
         res.content(repr(e))
         res.status(500)
 
