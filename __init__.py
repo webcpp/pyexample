@@ -9,7 +9,7 @@ app = hi()
 
 
 @app.route(r'^/(?P<module>.+)/?$',['GET','POST'])
-def run(req,res,param):
+def controller(req,res,param):
     try:
         module = importlib.import_module('.index',param['module'].replace("/","."))
         module.handler(req,res,param)
