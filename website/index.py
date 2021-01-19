@@ -12,28 +12,28 @@ def get_config():
 
 class dbhelp:
     def __init__(self):
-        self.config = get_config()
-        self.pool = PooledDB(pymysql,
-        cursorclass=pymysql.cursors.DictCursor,
-        host=self.config['host'],
-        port=self.config['port'],
-        user=self.config['username'],
-        password=self.config['password'],
-        database=self.config['database'],
-        charset=self.config['charset'])
-        self.connection = self.pool.connection()
-        self.cursor = self.connection.cursor()
+        self.__config = get_config()
+        self.__pool = PooledDB(pymysql,
+                        cursorclass=pymysql.cursors.DictCursor,
+                        host=self.__config['host'],
+                        port=self.__config['port'],
+                        user=self.__config['username'],
+                        password=self.__config['password'],
+                        database=self.__config['database'],
+                        charset=self.__config['charset'])
+        self.__connection = self.__pool.connection()
+        self.__cursor = self.__connection.cursor()
     def execute(self,sql,*argv):
-        return self.cursor.execute(sql,*argv)
+        return self.__cursor.execute(sql,*argv)
     def fetchone(self):
-        return self.cursor.fetchone()
+        return self.__cursor.fetchone()
     def fetchall(self):
-        return self.cursor.fetchall()
+        return self.__cursor.fetchall()
     def fetchmany(self,number_of_records):
-        return self.cursor.fetchmany(number_of_records)
+        return self.__cursor.fetchmany(number_of_records)
     def close(self):
-        self.cursor.close()
-        self.connection.close()
+        self.__cursor.close()
+        self.__connection.close()
         
 
 
