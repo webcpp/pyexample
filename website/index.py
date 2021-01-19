@@ -31,6 +31,10 @@ class dbhelp:
         return self.__cursor.fetchall()
     def fetchmany(self,number_of_records):
         return self.__cursor.fetchmany(number_of_records)
+    def commit(self):
+        self.__connection.commit()
+    def rollback(self):
+        self.__connection.rollback()
     def close(self):
         self.__cursor.close()
         self.__connection.close()
