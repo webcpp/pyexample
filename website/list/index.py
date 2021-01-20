@@ -1,9 +1,10 @@
 import json
-from website.index import dbhelp
+from hi import dbhelp
+from website.index import db_setting
 
 
 def findall(req,res,param):
-    db = dbhelp()
+    db = dbhelp(**db_setting)
     try:
         order = 'DESC'
         start = 0

@@ -1,8 +1,9 @@
 import json
-from website.index import dbhelp
+from hi import dbhelp
+from website.index import db_setting
 
 def find(req,res,param):
-    db = dbhelp()
+    db = dbhelp(**db_setting)
     try:
         if req.has_form("id"):
             count = db.execute("SELECT * FROM `websites` WHERE `id`=%s;" , (int(req.get_form('id'))))
