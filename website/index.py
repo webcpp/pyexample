@@ -1,8 +1,7 @@
 import pymysql
 from dbutils.pooled_db import PooledDB
 
-def get_config():
-    return {'host':'127.0.0.1',
+db_setting = {'host':'127.0.0.1',
             'port':3306,
             'user':'root',
             'password':'123456',
@@ -17,9 +16,13 @@ def get_config():
             'maxconnections':0,#the default value of 0 or None means any number of connections)
             }
 
+def get_config():
+    return db_setting
+
 class dbhelp:
-    def __init__(self):
-        self.__config = get_config()
+    def __init__(self,**config):
+        self.__config = db_setting
+        self.__config.update(config)
         self.__pool = PooledDB(**self.__config)
         self.__connection = self.__pool.connection()
         self.__cursor = self.__connection.cursor()
