@@ -16,8 +16,6 @@ db_setting = {'host':'127.0.0.1',
             'maxconnections':0,#the default value of 0 or None means any number of connections)
             }
 
-def get_config():
-    return db_setting
 
 class dbhelp:
     def __init__(self,**config):
